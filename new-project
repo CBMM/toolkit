@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# new-project - clone the CBMM project template and name it
+#
+# new-project [name]
+
+set -euxo pipefail
+
+NAME="$1"
+
+git clone git@github.com:CBMM/tensorflow-template.git "$NAME"
+cd "$NAME"
+
+git mv project "$NAME"
+
+sed -i.bak "s/project/$NAME/g" "$NAME"/*
+sed -i.bak "s/project/$NAME/g" tests/*
+
+git commit -a -m "'Initialize project $NAME from template'"
