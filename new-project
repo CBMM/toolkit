@@ -14,8 +14,8 @@ git remote remove origin
 
 git mv project "$NAME"
 
-sed -i.bak "s/project/$NAME/g" "$NAME"/*
-sed -i.bak "s/project/$NAME/g" tests/*
+sed -i "s/project/$NAME/g" "$NAME"/*
+sed -i "s/project/$NAME/g" tests/*
 
 git commit -a -m "'Initialize project $NAME from template'"
 
