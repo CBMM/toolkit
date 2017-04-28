@@ -42,6 +42,6 @@ set +u
 source venv/bin/activate
 set -u
 
-pip install -r requirements
+pip install -r requirements.txt
 
 deactivate
