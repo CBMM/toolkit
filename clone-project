@@ -8,17 +8,14 @@ set -euxo pipefail
 # Where is this script?
 MYDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# only polestar at the moment
-ENV="$1"
-
 # github user or organization
-OWNER="$2"
+OWNER="$1"
 
 #repository belonging to $OWNER
-REPO="$3"
+REPO="$2"
 
 #branch to deploy
-BRANCH="$4"
+BRANCH="$3"
 
 git clone "git@github.com:$OWNER/$REPO.git" --branch "${BRANCH:-master}"
 
