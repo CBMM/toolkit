@@ -38,7 +38,9 @@ python3 "$MYDIR/virtualenv/virtualenv.py" "$REPO/venv"
 
 cd "$REPO"
 
+set +u
 source venv/bin/activate
+set -u
 
 pip install -r requirements
 
