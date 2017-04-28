@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# new-project - clone a preexisting project and set it up
+#
+# new-project [name]
+
+set -euxo pipefail
+
+#Where is this script?
+MYDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# only polestar at the moment
+ENV="$1"
+
+# github user or organization
+OWNER="$2"
+
+#repository belonging to $OWNER
+REPO="$3"
+
+#branch to deploy
+BRANCH="$4"
+
+git clone "git@github.com:$OWNER/$REPO.git" --branch "${BRANCH:-master}"
+
+case $(echo ${ENV} | tr '[:upper:]' '[:lower:]') in
+  polestar) module add python/3.5;;
+  openmind) echo "ERROR: openmind not yet supported" && exit 1;;
+  *) echo "ERROR: ${ENV} not supported" && exit 1;;
+
+push "$MYDIR"
+
+git submodule update --init --recursive
+
+pop "$MYDIR"
+
+python3 "$MYDIR/virtualenv.py" "$REPO/venv"
+
+cd "$REPO"
+
+source venv/bin/activate
+
+pip install -r requirements
+
+deactivate
