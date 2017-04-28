@@ -34,7 +34,7 @@ git submodule update --init --recursive
 
 popd
 
-python3 "$MYDIR/virtualenv.py" "$REPO/venv"
+python3 "$MYDIR/virtualenv/virtualenv.py" "$REPO/venv"
 
 cd "$REPO"
 
