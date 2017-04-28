@@ -5,7 +5,7 @@
 
 set -euxo pipefail
 
-#Where is this script?
+# Where is this script?
 MYDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # only polestar at the moment
@@ -26,12 +26,13 @@ case $(echo ${ENV} | tr '[:upper:]' '[:lower:]') in
   polestar) module add python/3.5;;
   openmind) echo "ERROR: openmind not yet supported" && exit 1;;
   *) echo "ERROR: ${ENV} not supported" && exit 1;;
+esac
 
-push "$MYDIR"
+pushd "$MYDIR"
 
 git submodule update --init --recursive
 
-pop "$MYDIR"
+popd
 
 python3 "$MYDIR/virtualenv.py" "$REPO/venv"
 
