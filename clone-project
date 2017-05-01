@@ -3,21 +3,51 @@
 #
 # new-project [name]
 
-set -euxo pipefail
+set -euo pipefail
+
+#message to display when --help is used or the script gets invalid arguments
+usage="$(basename "$0") [--help | <owner> <repo> [branch]]
+
+owner\tOwner of the repository on GitHub
+repo\tName of the repository
+branch\tBranch of the repository to clone, by default it is master
+"
+showHelp=""
 
 # Where is this script?
 mydir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# github user or organization
-owner="$1"
+#parse command line args
 
-#repository belonging to $owner
-repo="$2"
+positionalArgs=()
 
-#branch to deploy
-branch="$3"
+while [[ $# -gt 0 ]]
+do
+key="$1"
 
-git clone "git@github.com:$owner/$repo.git" --branch "${branch:-master}"
+case $key in
+  --help)
+  showHelp=1
+  shift
+  ;;
+  *)
+  positionalArgs+=("$1")
+  shift
+  ;;
+esac
+done
+
+if [[ !(-z ${showHelp}) || !((${#positionalArgs[*]} > 1)) ]];
+then echo -e "$usage" && exit 0
+fi
+
+owner="${positionalArgs[0]}"
+repo="${positionalArgs[1]}"
+branch="${positionalArgs[2]:-master}"
+
+echo "cloning repository $owner/$repo:$branch"
+
+git clone "git@github.com:$owner/$repo.git" --branch "$branch"
 
 pushd "$mydir"
 
