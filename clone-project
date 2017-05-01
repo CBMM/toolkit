@@ -27,7 +27,7 @@ key="$1"
 
 case $key in
   --help)
-  showHelp=1
+  showHelp="yes"
   shift
   ;;
   *)
@@ -44,6 +44,19 @@ fi
 owner="${positionalArgs[0]}"
 repo="${positionalArgs[1]}"
 branch="${positionalArgs[2]:-master}"
+
+# set up modules
+
+if [[ !(-z ${MODULESHOME+x}) ]]
+then
+source "$MODULESHOME/init/bash"
+module add "openmind/miniconda/4.0.5-python3"
+else
+echo "modules not found, exiting" 1>&2
+exit 1
+fi
+
+# clone repo and initialize virtual env
 
 echo "cloning repository $owner/$repo:$branch"
 
