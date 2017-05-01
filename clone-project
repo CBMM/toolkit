@@ -6,28 +6,28 @@
 set -euxo pipefail
 
 # Where is this script?
-MYDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+mydir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # github user or organization
-OWNER="$1"
+owner="$1"
 
-#repository belonging to $OWNER
-REPO="$2"
+#repository belonging to $owner
+repo="$2"
 
 #branch to deploy
-BRANCH="$3"
+branch="$3"
 
-git clone "git@github.com:$OWNER/$REPO.git" --branch "${BRANCH:-master}"
+git clone "git@github.com:$owner/$repo.git" --branch "${branch:-master}"
 
-pushd "$MYDIR"
+pushd "$mydir"
 
 git submodule update --init --recursive
 
 popd
 
-python3 "$MYDIR/virtualenv/virtualenv.py" "$REPO/venv"
+python3 "$mydir/virtualenv/virtualenv.py" "$repo/venv"
 
-cd "$REPO"
+cd "$repo"
 
 set +u
 source venv/bin/activate
