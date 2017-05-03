@@ -1,3 +1,6 @@
 [submodule "virtualenv"]
 	path = virtualenv
 	url = https://github.com/pypa/virtualenv
+[submodule "nixpkgs"]
+	path = nixpkgs
+	url = git@github.com:NixOS/nixpkgs-channels.git
