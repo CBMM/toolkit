@@ -18,12 +18,3 @@ sed -i "s/project/$NAME/g" "$NAME"/*
 sed -i "s/project/$NAME/g" tests/*
 
 git commit -a -m "'Initialize project $NAME from template'"
-
-if [ -z ${NIX_PATH+x} ]
-then
-virtualenv venv
-source venv/bin/activate
-pip install -r requirements.txt -I
-pip install nose2 -I
-deactivate
-fi

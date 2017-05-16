@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -euxo pipefail
+
+# Where is this script?
+mydir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+pushd "$mydir"
+
+git submodule update --init --recursive
+
+popd
+
+python3 "$mydir/virtualenv/virtualenv.py" "$1/venv"
+
+pushd "$1"
+
+set +u
+source venv/bin/activate
+set -u
+
+if [ -e "requirements.txt" ]; then
+pip install -r requirements.txt
+fi
+
+echo "Virtual Environment set up in $1"
