@@ -11,7 +11,7 @@ git submodule update --init --recursive
 
 popd
 
-python3 "$mydir/virtualenv/virtualenv.py" -p "python3" "$1/venv"
+python3 "$mydir/virtualenv/virtualenv.py" -p "python3" --always-copy "$1/venv"
 
 pushd "$1"
 
